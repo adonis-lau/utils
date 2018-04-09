@@ -15,13 +15,52 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.target.version>1.8</project.target.version>
+
+        <maven.test.skip>true</maven.test.skip>
+        <maven.test.failure.ignore>true</maven.test.failure.ignore>
+
+        <commons.io.version>2.6</commons.io.version>
+        <commons.lang3.version>3.7</commons.lang3.version>
+
+        <lombok.version>1.16.20</lombok.version>
+        <log4j.version>2.11.0</log4j.version>
+        <junit.version>4.12</junit.version>
+
+        <quartz.version>2.3.0</quartz.version>
     </properties>
 
     <modules>
         <module>others</module>
         <module>modify-files</module>
         <module>my-utils</module>
+        <module>jdk8-learn</module>
     </modules>
+
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <skip>${maven.test.skip}</skip>
+                        <testFailureIgnore>${maven.test.failure.ignore}</testFailureIgnore>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${project.target.version}</source>
+                        <target>${project.target.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <!-- 设定主仓库，按设定顺序进行查找。 -->
     <repositories>

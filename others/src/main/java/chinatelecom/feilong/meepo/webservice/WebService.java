@@ -29,6 +29,10 @@ public class WebService {
             }
         }
     }
+//
+//    public static void main(String[] args) {
+//        getJobStatus("flow_1519725332217_jtwfkkql");
+//    }
 
     private static String jobExecute(String jobName) {
         String executionId = null;
