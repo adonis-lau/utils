@@ -1,4 +1,4 @@
-package bid.adonis.lau;
+package bid.adonis.lau.cron;
 
 import org.quartz.CronExpression;
 

@@ -26,7 +26,7 @@
         <lombok.version>1.16.20</lombok.version>
         <log4j.version>2.11.0</log4j.version>
         <junit.version>4.12</junit.version>
-
+        <fastjson.version>1.2.45</fastjson.version>
         <quartz.version>2.3.0</quartz.version>
     </properties>
 
