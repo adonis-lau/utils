@@ -20,14 +20,20 @@
         <maven.test.skip>true</maven.test.skip>
         <maven.test.failure.ignore>true</maven.test.failure.ignore>
 
+        <spring.version>4.3.17.RELEASE</spring.version>
+
         <commons.io.version>2.6</commons.io.version>
         <commons.lang3.version>3.7</commons.lang3.version>
+        <commons.dbutils.version>1.7</commons.dbutils.version>
 
         <lombok.version>1.16.20</lombok.version>
         <log4j.version>2.11.0</log4j.version>
+        <slf4j.version>1.7.25</slf4j.version>
         <junit.version>4.12</junit.version>
 
         <quartz.version>2.3.0</quartz.version>
+
+        <mysql.connector.version>5.1.46</mysql.connector.version>
     </properties>
 
     <modules>
@@ -35,6 +41,7 @@
         <module>modify-files</module>
         <module>my-utils</module>
         <module>jdk8-learn</module>
+        <module>mysql</module>
     </modules>
 
 

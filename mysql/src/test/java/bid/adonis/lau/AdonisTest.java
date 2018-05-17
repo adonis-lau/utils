@@ -1,8 +1,6 @@
 package bid.adonis.lau;
 
-import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  * @author Adonis Lau
@@ -12,7 +10,8 @@ import org.junit.jupiter.api.Test;
 public class AdonisTest {
 
     @Test
-    public void stringTest(){
+    public void stringTest()
+    {
         System.out.println("\\s+");
     }
 
