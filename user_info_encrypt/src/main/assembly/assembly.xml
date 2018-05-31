@@ -7,7 +7,7 @@
         <format>dir</format>
     </formats>
 
-    <includeBaseDirectory>false</includeBaseDirectory>
+    <includeBaseDirectory>true</includeBaseDirectory>
     <fileSets>
         <fileSet>
             <directory>${basedir}/src/main/assembly/dist/conf</directory>

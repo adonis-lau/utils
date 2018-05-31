@@ -11,7 +11,7 @@
     <fileSets>
         <fileSet>
             <directory>${basedir}/src/main/assembly/dist/conf</directory>
-            <outputDirectory></outputDirectory>
+            <outputDirectory>/</outputDirectory>
             <includes>
                 <include>**</include>
             </includes>

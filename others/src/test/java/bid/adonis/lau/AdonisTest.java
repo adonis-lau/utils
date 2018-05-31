@@ -1,5 +1,6 @@
 package bid.adonis.lau;
 
+import org.apache.commons.io.output.WriterOutputStream;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -10,10 +11,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
@@ -136,5 +134,33 @@ public class AdonisTest {
 
             return null;
         }
+    }
+
+    @Test
+    public void createFile(){
+        try {
+            for (int j = 0; j < 1; j++) {
+                FileWriter fileWriter = new FileWriter("E:\\TestFiles\\zhouxicheng\\source" + (j + 1) + ".txt" );
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                for (int i = 0; i < 100; i++) {
+                    bufferedWriter.write("AGO\u0005Angola\u0005Africa\u000512345678\u0005中文测试\u00051975\u000512878000\u000538.3\u00056648\u00057984\u0005Angola\u0005Republic\u0005JosÃ© Eduardo dos Santos\u000556\u0005AO\n");
+                    bufferedWriter.write("AGO\u0005Angola\u0005Africa\u0005\u0005乱码测试\u00051975\u000512878000\u000538.3\u00056648\u00057984\u0005Angola\u0005Republic\u0005JosÃ© Eduardo dos Santos\u000556\u0005AO\n");
+                    bufferedWriter.write("AGO\u0005Angola\u0005Africa\u0005中文\u00051246700\u00051975\u000512878000\u000538.3\u00056648\u00057984\u0005Angola\u0005Republic\u0005JosÃ© Eduardo dos Santos\u000556\u0005AO\n");
+                    bufferedWriter.write("AGO\u0005Angola\u0005Africa\u0005yingwen\u00051246700\u00051975\u000512878000\u000538.3\u00056648\u00057984\u0005Angola\u0005Republic\u0005JosÃ© Eduardo dos Santos\u000556\u0005AO\n");
+                }
+                bufferedWriter.close();
+                fileWriter.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void arrayTest(){
+        String str = "AGO\u0005Angola\u0005Africa\u000512345678\u00051246700\u00051975\u000512878000\u000538.3\u00056648\u00057984\u0005Angola\u0005Republic\u0005JosÃ© Eduardo dos Santos\u000556\u0005AO";
+        String[] split = str.split("\u0005", -1);
+        split[3] = "q28374rfhioufwdfg32orydskgfbjqwgf7o8iwgakfj2q3uofgewkhfbkqewugfofobdakhbvk";
+        System.out.println(split[3]);
     }
 }

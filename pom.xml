@@ -19,6 +19,7 @@
 
         <maven.test.skip>true</maven.test.skip>
         <maven.test.failure.ignore>true</maven.test.failure.ignore>
+        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
 
         <spring.version>4.3.17.RELEASE</spring.version>
 
@@ -27,8 +28,9 @@
         <commons.dbutils.version>1.7</commons.dbutils.version>
 
         <lombok.version>1.16.20</lombok.version>
-        <log4j.version>2.11.0</log4j.version>
+        <!--<log4j.version>2.11.0</log4j.version>-->
         <slf4j.version>1.7.25</slf4j.version>
+        <logback.version>1.2.3</logback.version>
         <junit.version>4.12</junit.version>
         <fastjson.version>1.2.45</fastjson.version>
         <quartz.version>2.3.0</quartz.version>
@@ -41,7 +43,9 @@
         <module>modify-files</module>
         <module>my-utils</module>
         <module>jdk8-learn</module>
+        <module>multithreading</module>
         <module>mysql</module>
+        <module>user_info_encrypt</module>
     </modules>
 
 
@@ -71,10 +75,17 @@
 
     <!-- 设定主仓库，按设定顺序进行查找。 -->
     <repositories>
+        <!--alibaba-->
         <repository>
             <id>nexus-aliyun</id>
             <name>Nexus aliyun</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
+        <!--cloudera-->
+        <repository>
+            <id>cloudera</id>
+            <name>cloudera maven</name>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
     </repositories>
     <!-- 设定插件仓库 -->
