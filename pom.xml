@@ -27,15 +27,14 @@
         <commons.lang3.version>3.7</commons.lang3.version>
         <commons.dbutils.version>1.7</commons.dbutils.version>
 
-        <lombok.version>1.16.20</lombok.version>
-        <!--<log4j.version>2.11.0</log4j.version>-->
-        <slf4j.version>1.7.25</slf4j.version>
-        <logback.version>1.2.3</logback.version>
+        <cdh.hadoop.version>2.6.0-cdh5.13.0</cdh.hadoop.version>
+
+        <lombok.version>1.18.2</lombok.version>
         <junit.version>4.12</junit.version>
         <fastjson.version>1.2.45</fastjson.version>
         <quartz.version>2.3.0</quartz.version>
 
-        <mysql.connector.version>5.1.46</mysql.connector.version>
+        <mysql.connector.version>5.1.47</mysql.connector.version>
     </properties>
 
     <modules>
@@ -46,6 +45,7 @@
         <module>multithreading</module>
         <module>mysql</module>
         <module>user_info_encrypt</module>
+        <module>kerberosCache-java</module>
     </modules>
 
 
