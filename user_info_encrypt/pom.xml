@@ -38,15 +38,15 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-lzo</artifactId>
             <version>0.4.13</version>
-            <!--<scope>system</scope>-->
-            <!--<systemPath>${project.basedir}/lib/hadoop-lzo-0.4.13.jar</systemPath>-->
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/hadoop-lzo-0.4.13.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.ideal.wushuo</groupId>
             <artifactId>encrypt</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <!--<scope>system</scope>-->
-            <!--<systemPath>${project.basedir}/lib/EncryptionDemo-1.0-SNAPSHOT.jar</systemPath>-->
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/encrypt-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
