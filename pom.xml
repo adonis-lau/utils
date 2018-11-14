@@ -24,17 +24,19 @@
         <spring.version>4.3.17.RELEASE</spring.version>
 
         <commons.io.version>2.6</commons.io.version>
-        <commons.lang3.version>3.7</commons.lang3.version>
+        <commons.lang3.version>3.8.1</commons.lang3.version>
         <commons.dbutils.version>1.7</commons.dbutils.version>
 
         <cdh.hadoop.version>2.6.0-cdh5.13.0</cdh.hadoop.version>
 
         <lombok.version>1.18.2</lombok.version>
         <junit.version>4.12</junit.version>
-        <fastjson.version>1.2.45</fastjson.version>
+        <fastjson.version>1.2.51</fastjson.version>
         <quartz.version>2.3.0</quartz.version>
 
         <mysql.connector.version>5.1.47</mysql.connector.version>
+
+        <jsch.version>0.1.54</jsch.version>
     </properties>
 
     <modules>
@@ -46,6 +48,7 @@
         <module>mysql</module>
         <module>user_info_encrypt</module>
         <module>kerberosCache-java</module>
+        <module>ssh-command</module>
     </modules>
 
 
