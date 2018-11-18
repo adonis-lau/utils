@@ -25,6 +25,12 @@ public class JobTest {
         JobConfig jobConfig = JobUtils.getJobConfig("1,23,45 * * * * ?");
         GeneralResponse configResponse = jobService.setSchedulerConfig(job.getJobName(), job.getProjectId(), jobConfig);
         System.out.println(JSONObject.toJSONString(configResponse));
+
     }
 
+    @Test
+    public void jobDelete(){
+        GeneralResponse response = jobService.deleteJob("webServiceTest_1542553366109", "test");
+        System.out.println(JSONObject.toJSONString(response));
+    }
 }

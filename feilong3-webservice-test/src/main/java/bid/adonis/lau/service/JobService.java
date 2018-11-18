@@ -74,7 +74,7 @@ public class JobService {
             JobConfig jobConfig = JobUtils.getJobConfig(SchedulerType.WEEKLY, 0, 0, 0, 1, 0);
             // 组合作业
             String jobName = "webServiceTest_" + System.currentTimeMillis();
-            job = JobUtils.getJob(jobName, "40288df2631f723801632546c8f60321", "meepo_job", jobParams, jobConfig,
+            job = JobUtils.getJob(jobName, "test", "meepo_job", jobParams, jobConfig,
                     shell, jar, python, ssh, ssh2);
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,7 +90,7 @@ public class JobService {
         GeneralResponse generalResponse = null;
         try {
             // 初始化作业发布服务
-            SchedulerService.init("10.5.27.27", 80, "feilong3");
+            SchedulerService.init("work", 8080, "feilong3");
             // 调用作业发布方法，传入作业文件流发布作业
             generalResponse = SchedulerService.publishJob(job);
         } catch (IOException e) {
@@ -106,7 +106,7 @@ public class JobService {
         GeneralResponse generalResponse = null;
         try {
             // 初始化作业发布服务
-            SchedulerService.init("10.5.27.27", 80, "feilong3");
+            SchedulerService.init("work", 8080, "feilong3");
             // 调用设置调度策略方法，修改作业的调度策略
             generalResponse = SchedulerService.setJobPolicy(jobName, projectId, jobConfig);
         } catch (IOException | SchedulerException e) {
@@ -122,7 +122,7 @@ public class JobService {
         GeneralResponse generalResponse = null;
         try {
             // 初始化作业发布服务
-            SchedulerService.init("10.5.27.27", 80, "feilong3");
+            SchedulerService.init("work", 8080, "feilong3");
             // 调用作业删除方法删除作业
             generalResponse = SchedulerService.jobDelete(jobName, projectId);
         } catch (IOException | SchedulerException e) {
