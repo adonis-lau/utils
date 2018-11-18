@@ -49,6 +49,7 @@
         <module>user_info_encrypt</module>
         <module>kerberosCache-java</module>
         <module>ssh-command</module>
+        <module>feilong3-webservice-test</module>
     </modules>
 
 
