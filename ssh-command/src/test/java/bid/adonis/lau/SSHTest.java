@@ -1,6 +1,7 @@
 package bid.adonis.lau;
 
 
+import bid.adonis.lau.ssh.SSHUtils;
 import bid.adonis.lau.utils.LogsUtils;
 import com.jcraft.jsch.JSchException;
 import org.junit.Test;
@@ -30,5 +31,13 @@ public class SSHTest {
         System.out.println();
         String logs = LogsUtils.getExecutorLogs(path, 0L, 100L);
         System.out.println(logs);
+    }
+
+    @Test
+    public void chineseTest(){
+        String command = "echo \"中文测试\"";
+
+        String s = SSHUtils.exeCommand(command, "centos", "adonis", "adonis.lau");
+        System.out.println(s);
     }
 }
