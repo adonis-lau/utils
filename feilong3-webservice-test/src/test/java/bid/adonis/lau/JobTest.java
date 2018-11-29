@@ -1,11 +1,14 @@
 package bid.adonis.lau;
 
+import bid.adonis.lau.entity.Constant;
 import bid.adonis.lau.service.JobService;
 import chinatelecom.feilong.scheduler.entity.Job;
 import chinatelecom.feilong.scheduler.entity.JobConfig;
 import chinatelecom.feilong.scheduler.entity.response.GeneralResponse;
+import chinatelecom.feilong.scheduler.service.SchedulerService;
 import chinatelecom.feilong.scheduler.utils.JSONObject;
 import chinatelecom.feilong.scheduler.utils.JobUtils;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -13,7 +16,15 @@ import org.junit.Test;
  * @date: 2018/11/15 10:41
  */
 public class JobTest {
+
     private JobService jobService = new JobService();
+
+    @Before
+    public void init() {
+        // 初始化作业发布服务
+//        SchedulerService.init("work", 8080, "feilong3");
+        SchedulerService.init(Constant.IP, Constant.PORT, Constant.CONTEXT);
+    }
 
     @Test
     public void jobTest() {
@@ -29,8 +40,8 @@ public class JobTest {
     }
 
     @Test
-    public void jobDelete(){
-        GeneralResponse response = jobService.deleteJob("webServiceTest_1542553366109", "test");
+    public void jobDelete() {
+        GeneralResponse response = jobService.deleteJob("webServiceTest_1542553366109", Constant.PROJECT_ID);
         System.out.println(JSONObject.toJSONString(response));
     }
 }

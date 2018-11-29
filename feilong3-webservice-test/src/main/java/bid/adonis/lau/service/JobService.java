@@ -1,5 +1,6 @@
 package bid.adonis.lau.service;
 
+import bid.adonis.lau.entity.Constant;
 import chinatelecom.feilong.scheduler.entity.Job;
 import chinatelecom.feilong.scheduler.entity.JobConfig;
 import chinatelecom.feilong.scheduler.entity.JobParams;
@@ -44,8 +45,8 @@ public class JobService {
             // 创建Python组件
             BasePlugin<Python> python = JobPluginUtils.getPython("python_test", "print('123')", null, (String) null);
             // 创建SSH组件
-            BasePlugin<SSH> ssh = JobPluginUtils.getSSH("ssh_test", "10.4.71.25", "22", "meepo", "poker,123#", "java -version", SSHTimeout.OneHour);
-            BasePlugin<SSH> ssh2 = JobPluginUtils.getSSH("ssh_test2", "10.4.71.25", "22", "meepo", "poker,123#", "cat ./dependentFiles/tmp.txt", SSHTimeout.OneHour);
+            BasePlugin<SSH> ssh = JobPluginUtils.getSSH("ssh_test", Constant.SSH_IP, Constant.SSH_PORT, Constant.SSH_USERNAME, Constant.SSH_PASSWORD, "java -version", SSHTimeout.OneHour);
+            BasePlugin<SSH> ssh2 = JobPluginUtils.getSSH("ssh_test2", Constant.SSH_IP, Constant.SSH_PORT, Constant.SSH_USERNAME, Constant.SSH_PASSWORD, "cat ./dependentFiles/tmp.txt", SSHTimeout.OneHour);
 
             // 设置组件依赖关系
             // shell/ssh/ssh2 并列第一运行，默认设置继承于开始节点，所以不需要设置依赖节点
@@ -74,7 +75,7 @@ public class JobService {
             JobConfig jobConfig = JobUtils.getJobConfig(SchedulerType.WEEKLY, 0, 0, 0, 1, 0);
             // 组合作业
             String jobName = "webServiceTest_" + System.currentTimeMillis();
-            job = JobUtils.getJob(jobName, "test", "meepo_job", jobParams, jobConfig,
+            job = JobUtils.getJob(jobName, Constant.PROJECT_ID, Constant.USERNAME, jobParams, jobConfig,
                     shell, jar, python, ssh, ssh2);
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,8 +90,6 @@ public class JobService {
     public GeneralResponse publishJob(Job job) {
         GeneralResponse generalResponse = null;
         try {
-            // 初始化作业发布服务
-            SchedulerService.init("work", 8080, "feilong3");
             // 调用作业发布方法，传入作业文件流发布作业
             generalResponse = SchedulerService.publishJob(job);
         } catch (IOException e) {
@@ -105,8 +104,6 @@ public class JobService {
     public GeneralResponse setSchedulerConfig(String jobName, String projectId, JobConfig jobConfig) {
         GeneralResponse generalResponse = null;
         try {
-            // 初始化作业发布服务
-            SchedulerService.init("work", 8080, "feilong3");
             // 调用设置调度策略方法，修改作业的调度策略
             generalResponse = SchedulerService.setJobPolicy(jobName, projectId, jobConfig);
         } catch (IOException | SchedulerException e) {
@@ -121,8 +118,6 @@ public class JobService {
     public GeneralResponse deleteJob(String jobName, String projectId) {
         GeneralResponse generalResponse = null;
         try {
-            // 初始化作业发布服务
-            SchedulerService.init("work", 8080, "feilong3");
             // 调用作业删除方法删除作业
             generalResponse = SchedulerService.jobDelete(jobName, projectId);
         } catch (IOException | SchedulerException e) {
