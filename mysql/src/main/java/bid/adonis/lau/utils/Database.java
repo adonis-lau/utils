@@ -23,7 +23,7 @@ public class Database {
     public Database() throws IOException {
         runner = new QueryRunner();
         this.driver = "com.mysql.jdbc.Driver";
-        this.driverUrl = "jdbc:mysql://127.0.0.1:3306/adonis_test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&useSSL=false";
+        this.driverUrl = "jdbc:mysql://127.0.0.1:3306/adonis_lau_test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useOldAliasMetadataBehavior=true&autoReconnect=true&serverTimezone=Asia/Shanghai";
         this.user = "root";
         this.password = "546085758";
     }
