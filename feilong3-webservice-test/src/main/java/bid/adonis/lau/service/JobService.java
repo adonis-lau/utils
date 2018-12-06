@@ -35,18 +35,20 @@ public class JobService {
         try {
             // 创建组件
             // 创建Shell组件
-            File shellDepFile = FileUtils.getFile("C:\\Users\\adonis\\Desktop\\tmp.txt");
-            String shellDepFilePath = FileUtils.getFile("Users/adonis/Desktop/tmp.txt").getPath();
-            BasePlugin<Shell> shell = JobPluginUtils.getShell("shell_test", "return -1", null, shellDepFilePath, null);
+            File shellDepFile = FileUtils.getFile("/data/tmp/tmp.txt");
+            String shellDepFilePath = FileUtils.getFile("test/001/abc.txt").getPath();
+            BasePlugin<Shell> shell = JobPluginUtils.getShell("shell_test", "cat ./test/001/abc.txt", null, shellDepFilePath, null);
+            // 创建shell2组件
+            BasePlugin<Shell> shell2 = JobPluginUtils.getShell("shell2", "sleep 30", null, (String) null, null);
             // 创建Jar组件
-            File jarPluginDepJar = FileUtils.getFile("D:\\Work\\电信理想\\meepo\\飞龙\\测试用例\\jar\\jar-test.jar");
-            String jarPluginDepJarPath = FileUtils.getFile("/Work/电信理想/meepo/飞龙/测试用例/jar/jar-test.jar").getPath();
-            BasePlugin<Jar> jar = JobPluginUtils.getJar("jar_test", jarPluginDepJarPath, "chinatelecom.feilong.meepo.webservice.WebService", "111 222 333 444", null);
+            File jarPluginDepJar = FileUtils.getFile("/data/tmp/jar-test2.jar");
+            String jarPluginDepJarPath = FileUtils.getFile("/test/001/jar-test2.jar").getPath();
+            BasePlugin<Jar> jar = JobPluginUtils.getJar("jar_test", jarPluginDepJarPath, "chinatelecom.feilong.meepo.webservice.WebService", "111 222 333 444", (String) null, null);
             // 创建Python组件
             BasePlugin<Python> python = JobPluginUtils.getPython("python_test", "print('123')", null, (String) null);
             // 创建SSH组件
             BasePlugin<SSH> ssh = JobPluginUtils.getSSH("ssh_test", Constant.SSH_IP, Constant.SSH_PORT, Constant.SSH_USERNAME, Constant.SSH_PASSWORD, "java -version", SSHTimeout.OneHour);
-            BasePlugin<SSH> ssh2 = JobPluginUtils.getSSH("ssh_test2", Constant.SSH_IP, Constant.SSH_PORT, Constant.SSH_USERNAME, Constant.SSH_PASSWORD, "cat ./dependentFiles/tmp.txt", SSHTimeout.OneHour);
+            BasePlugin<SSH> ssh2 = JobPluginUtils.getSSH("ssh_test2", Constant.SSH_IP, Constant.SSH_PORT, Constant.SSH_USERNAME, Constant.SSH_PASSWORD, "cat /etc/profile", SSHTimeout.OneHour);
 
             // 设置组件依赖关系
             // shell/ssh/ssh2 并列第一运行，默认设置继承于开始节点，所以不需要设置依赖节点
@@ -74,9 +76,8 @@ public class JobService {
             // 设置作业调度策略
             JobConfig jobConfig = JobUtils.getJobConfig(SchedulerType.WEEKLY, 0, 0, 0, 1, 0);
             // 组合作业
-            String jobName = "webServiceTest_" + System.currentTimeMillis();
-            job = JobUtils.getJob(jobName, Constant.PROJECT_ID, Constant.USERNAME, jobParams, jobConfig,
-                    shell, jar, python, ssh, ssh2);
+            job = JobUtils.getJob(Constant.JOBNAME, Constant.PROJECT_ID, Constant.USERNAME, jobParams, jobConfig,
+                    shell, shell2, jar, python, ssh, ssh2);
         } catch (Exception e) {
             e.printStackTrace();
         }

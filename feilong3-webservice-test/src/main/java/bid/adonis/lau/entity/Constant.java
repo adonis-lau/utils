@@ -12,6 +12,7 @@ public class Constant {
     public static final String CONTEXT = "meepo";
     public static final String USERNAME = "meepo_job";
 
+    public static final String JOBNAME = "webServiceTest_1543476609886";
     public static final String PROJECT_ID = "40288df2631f723801632546c8f60321";
     public static final String SSH_IP = "192.168.13.72";
     public static final String SSH_PORT = "22";
