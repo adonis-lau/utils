@@ -11,6 +11,9 @@ public class Constant {
     public static final Integer PORT = 5460;
     public static final String CONTEXT = "meepo";
     public static final String USERNAME = "meepo_job";
+    public static final String SYSTEM_NAME = "meepo";
+    public static final String TASK_NAME = "test";
+    public static final String JOB_DESCRIPTION = "测试作业";
 
     public static final String JOBNAME = "webServiceTest_1543476609886";
     public static final String PROJECT_ID = "40288df2631f723801632546c8f60321";
