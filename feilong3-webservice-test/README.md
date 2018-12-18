@@ -1,5 +1,20 @@
 #飞龙3任务调度接口调用Jar包使用样例
 
+## 将Jar包安装到本地Maven仓库
+mvn install:install-file -DgroupId=chinatelecom.feilong3 -DartifactId=scheduler-interface -Dversion=1.0-SNAPSHOT -Dpackaging=jar -Dfile=D:\Workspaces\IdeaProjects\Work\feilong\feilong3.0\util-common\scheduler-interface\deploy\scheduler-interface-1.0-SNAPSHOT.jar
+<br/>
+mvn install:install-file -DgroupId=chinatelecom.feilong3 -DartifactId=scheduler-interface -Dversion=1.0-SNAPSHOT -Dpackaging=jar -Dfile=D:\Workspaces\IdeaProjects\Work\feilong\feilong3.0\util-common\scheduler-interface\target\scheduler-interface-1.0-SNAPSHOT-sources.jar -Dclassifier=sources
+<br/>
+
+## Jar包在pom中的引用
+```
+<dependency>
+    <groupId>chinatelecom.feilong3</groupId>
+    <artifactId>scheduler-interface</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
 ##接口列表：
 * 发布作业
 * 设置调度策略
@@ -17,13 +32,24 @@
 
 ##Jar包使用方法
 * ###所有接口调用前，都应该调用 SchedulerService.init(String ip, int port, String context); 方法，初始化接口信息。
+  * 参数说明：
+    * ip：任务调度web服务的ip地址
+    * port：任务调度web服务的端口
+    * context：任务调度web服务的名称
+
 * ###发布作业（发布作业分两个步骤：创建作业，调用作业发布方法）
   * ####创建作业
-    * 使用 JobPluginUtils 类中的get方法可以获取到对应的功能组件。例如getShell、getJar和getMR等。各个组件的组件名称（label）不可以相同。
-    * 使用 JobUtils 类中的getJob方法可以获取到作业对象。getJobParams方法可以获取到作业的运行参数对象。getJobConfig方法可以获取到作业调度策略对象。
+    * 组件，是作业的最小组成结构。运行作业，就是按照用户自定义的顺序，依次运行组件。使用 JobPluginUtils 类中的get方法,传入正确的参数，便可以获取到对应的功能组件。各个组件的组件名称（label，所有get方法中的第一个参数）不可以相同。例:<br/>
+      ###### public static BasePlugin<Shell> getShell(String label, String scriptcontent, String command_args, String file, String output_args)
+      * label: 组件名称（节点名称）
+      * scriptcontent: Shell脚本内容
+      * command_args: 命令行参数，即要传入Shell脚本的参数列表
+      * file: 执行Shell脚本时用到的依赖文件
+      * output_args: Shell参数执行完，想要传递给下一个组件的参数
     * 创建组件时引入依赖文件（例：Jar组件的依赖文件，就是一个或者多个Jar包等），有两种方式（两种方式可以兼容。即 List 中可以一部分是本地文件路径，另一部分是空间文件的路径）。
       1. 引用本地文件。在使用JobPluginUtils获取组件对象时，传入本地的`文件路径`或者`文件路径List`。（这里使用的，只是文件路径。文件本身，需要在使用JobUtils获取Job对象时，传入List\<File>）
       2. 引用“用户空间管理”中的文件。在使用JobPluginUtils获取组件对象时，传入`用户空间`中的`文件路径`或者`文件路径List`。
+    * `BasePlugin<Shell> shell = JobPluginUtils.getShell("shell_test", "cat ./test/001/abc.txt", null, "test/001/abc.txt", null);`  便是创建了一个名称叫做“shell_test”、脚本内容是“cat ./test/001/abc.txt”、依赖文件为"test/001/abc.txt"、没有输入参数和输出参数的shell组件。在作业运行到这个组件的时候，会执行shell脚本中的内容，打印出abc.txt文件中的内容。
     * 设置组件之间的依赖关系。
       * 组件之间，依赖关系有三种：
         1. LineColor.green（绿色连线。父节点运行成功，才运行当前组件）
@@ -32,6 +58,10 @@
       * 使用组件的setDependencies方法设置依赖关系。
         1. 一个组件，可以有多个父级依赖。组件与组件之间，应该构成`有向无环`图。
         2. 可以只设置依赖组件，而不设置连线颜色。连线颜色默认值为LineColor.green。
+      * 依赖关系设置示例：
+        1. `python.setDependencies(jar);` 表示jar组件运行成功了，才会运行jar组件。（没有指明LineColor，默认为green）
+        2. `jar.setDependencies(shell, LineColor.red);` 表示shell组件运行失败了，才会运行jar组件。
+        3. `mr.setDependencies(shell, LineColor.black);` 表示shell组件运行完成后，运行jar组件。（无论shell组件是成功还是失败）
     * 设置作业参数。JobUtils.getJobParams(String key, String value); 方法，有两个参数。
       1. 第一个参数为 key ，多个key之间用 `,` 分割。例：pathValue,minutes
       2. 第二个参数为 value，格式应该符合JS规范。例：
@@ -54,8 +84,21 @@
       * 使用 JobUtils.getJobConfig() 方法可以获取调度策略对象。
       * 调度策略可以按照 `秒，分，时，周，月` 进行设置，也可以使用`crontab`表达式进行设置。
       * 调度时间间隔必须大于10分钟。
+      * 例如:
+        ```
+          JobConfig jobConfig = JobUtils.getJobConfig(SchedulerType.WEEKLY, 0, 0, 0, 1, 0);
+        ```
+        表示调度策略设置为每周第一天0点0分0秒
     * 创建作业
       * 使用 JobUtils.getJob() 方法，传入对应参数（作业名、项目ID、用户名、运行参数、调度策略、依赖文件、组件等），获取作业对象。
+      * 例如：
+      ```
+        方法：
+        public static Job getJob(String jobName, String projectId, String username, String systemName, String taskName, String jobDescription, JobParams jobParams, JobConfig jobConfig, List<File> dependentFiles, BasePlugin... plugins)
+        方法的使用：
+        Job job = JobUtils.getJob("job_publish_test_1543476609886", "40288df2631f723801632546c8f60321", "meepo_job", "meepo", "test", "测试作业", jobParams, jobConfig, dependentFiles, shell, jar, python, mr);
+      ```
+      这样我们便创建了一个作业名为 job_publish_test_1543476609886 、归属于项目 40288df2631f723801632546c8f60321 和 用户 meepo_job 的作业。该作业包含了作业运行参数 jobParams 、调度策略为 jobConfig 、依赖文件为 dependentFiles 。包含了 shell、 jar、 python和mr等四个组件。
   * ####调用作业发布方法
     * 调用 SchedulerService.publishJob(Job job) ，传入之前创建的作业即可发布作业。
     
