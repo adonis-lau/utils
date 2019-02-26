@@ -9,6 +9,8 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import java.lang.management.ManagementFactory;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -43,5 +45,34 @@ public class ThreadTest {
 
         WriteFile writeFile = new WriteFile();
         writeFile.writeFile(filePath, timeInterval);
+    }
+
+    @Test
+    public void breakTest() {
+        int mm = 10;
+        for (int i = 0; i < mm; i++) {
+            if (i < 50){
+                System.out.println("aaa");
+                if (i > 3){
+                    continue;
+                }
+                System.out.println("bb");
+            }
+        }
+    }
+
+    @Test
+    public void listTest() {
+        List<String> list = new ArrayList<>();
+        list.add(null);
+        list.add("aa");
+        list.add(null);
+        list.add(null);
+        list.add("");
+        list.add(null);
+        System.out.println(list.size());
+        for (String s : list) {
+            System.out.println(s);
+        }
     }
 }

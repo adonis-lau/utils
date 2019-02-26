@@ -9,9 +9,9 @@ mvn install:install-file -DgroupId=chinatelecom.feilong3 -DartifactId=scheduler-
 ## Jar包在pom中的引用
 ```
 <dependency>
-    <groupId>chinatelecom.feilong3</groupId>
+    <groupId>chinatelecom.feilong</groupId>
     <artifactId>scheduler-interface</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 </dependency>
 ```
 

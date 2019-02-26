@@ -15,9 +15,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>chinatelecom.feilong</groupId>
+            <groupId>chinatelecom.feilong3</groupId>
             <artifactId>scheduler-interface</artifactId>
-            <version>1.0</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -68,7 +68,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>bid.adonis.lau.service.JobService</mainClass>
+                            <mainClass>bid.adonis.lau.test.Test</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>

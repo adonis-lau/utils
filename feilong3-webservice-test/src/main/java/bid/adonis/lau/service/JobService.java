@@ -24,7 +24,7 @@ public class JobService {
         try {
             // 调用作业发布方法，传入作业文件流发布作业
             generalResponse = SchedulerService.publishJob(job);
-        } catch (IOException e) {
+        } catch (IOException | SchedulerException e) {
             e.printStackTrace();
         }
         return generalResponse;
