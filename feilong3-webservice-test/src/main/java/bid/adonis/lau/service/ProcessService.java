@@ -5,7 +5,6 @@ import chinatelecom.feilong.scheduler.entity.response.GeneralResponse;
 import chinatelecom.feilong.scheduler.service.SchedulerService;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
 
 /**
@@ -179,23 +178,5 @@ public class ProcessService {
             e.printStackTrace();
         }
         return generalResponse;
-    }
-
-    /**
-     * 获取运行日志
-     *
-     * @param jobName
-     * @param projectId
-     * @param executionId
-     * @return
-     */
-    public InputStream downloadLog(String jobName, String projectId, String executionId) {
-        InputStream inputStream = null;
-        try {
-            inputStream = SchedulerService.downloadLog(jobName, projectId, executionId);
-        } catch (IOException | SchedulerException e) {
-            e.printStackTrace();
-        }
-        return inputStream;
     }
 }

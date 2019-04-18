@@ -10,6 +10,7 @@ import chinatelecom.feilong.scheduler.entity.plugins.Jar;
 import chinatelecom.feilong.scheduler.entity.response.GeneralResponse;
 import chinatelecom.feilong.scheduler.enumeration.SchedulerType;
 import chinatelecom.feilong.scheduler.service.SchedulerService;
+import chinatelecom.feilong.scheduler.utils.DateUtils;
 import chinatelecom.feilong.scheduler.utils.JSONObject;
 import chinatelecom.feilong.scheduler.utils.JobPluginUtils;
 import chinatelecom.feilong.scheduler.utils.JobUtils;
@@ -17,6 +18,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,13 +27,13 @@ import java.util.List;
  */
 public class Test {
     public static void main(String[] args) {
-        SchedulerService.init(Constant.IP, Constant.PORT, Constant.CONTEXT);
+        SchedulerService.initHttp(Constant.IP, Constant.PORT, Constant.CONTEXT);
         JobService jobService = new JobService();
         Test test = new Test();
         Job job = test.createJob("", "");
 //        Job job = test.createJob(args[0], args[1]);
-        GeneralResponse publistResponse = jobService.publishJob(job);
         System.out.println(job);
+        GeneralResponse publistResponse = jobService.publishJob(job);
         System.out.println(JSONObject.toJSONString(publistResponse));
     }
 
@@ -72,9 +74,9 @@ public class Test {
                     "var pathValue = \"\" + year + month + day + hour + minutes;");
 
             /*设置作业调度策略*/
-            JobConfig jobConfig = JobUtils.getJobConfig(SchedulerType.WEEKLY, 0, 0, 0, 1, 0);
+            JobConfig jobConfig = JobUtils.getJobConfig(SchedulerType.WEEKLY, 0, 0, 0, 1, 0, new Date(), DateUtils.addDays(new Date(), 10), true);
             /*组合作业*/
-            job = JobUtils.getJob(Constant.JOBNAME, Constant.PROJECT_ID, Constant.USERNAME, Constant.SYSTEM_NAME,
+            job = JobUtils.getJob(Constant.JOBNAME, Constant.PROJECT_ID, Constant.USERNAME, Constant.PORTAL_USER_ID, Constant.USER_TYPE, Constant.SYSTEM_NAME,
                     Constant.TASK_NAME, Constant.JOB_DESCRIPTION, jobParams, jobConfig, allDepFile, jar);
         } catch (Exception e) {
             e.printStackTrace();

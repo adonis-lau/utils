@@ -4,18 +4,9 @@ import bid.adonis.lau.entity.Constant;
 import bid.adonis.lau.service.JobService;
 import bid.adonis.lau.service.ProcessService;
 import bid.adonis.lau.service.ProjectService;
-import chinatelecom.feilong.scheduler.entity.Job;
-import chinatelecom.feilong.scheduler.entity.JobConfig;
-import chinatelecom.feilong.scheduler.entity.JobParams;
-import chinatelecom.feilong.scheduler.entity.JobResultNotification;
-import chinatelecom.feilong.scheduler.entity.ProjectInfo;
+import chinatelecom.feilong.scheduler.entity.*;
 import chinatelecom.feilong.scheduler.entity.exception.SchedulerException;
-import chinatelecom.feilong.scheduler.entity.plugins.BasePlugin;
-import chinatelecom.feilong.scheduler.entity.plugins.Jar;
-import chinatelecom.feilong.scheduler.entity.plugins.Python;
-import chinatelecom.feilong.scheduler.entity.plugins.SSH;
-import chinatelecom.feilong.scheduler.entity.plugins.Shell;
-import chinatelecom.feilong.scheduler.entity.plugins.Spark;
+import chinatelecom.feilong.scheduler.entity.plugins.*;
 import chinatelecom.feilong.scheduler.entity.response.GeneralResponse;
 import chinatelecom.feilong.scheduler.enumeration.LineColor;
 import chinatelecom.feilong.scheduler.enumeration.NotificationSendMoment;
@@ -31,15 +22,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +43,7 @@ public class JobTest {
     public void init() {
         // 初始化作业发布服务
 //        SchedulerService.init("work", 8080, "feilong3");
-        SchedulerService.init(Constant.IP, Constant.PORT, Constant.CONTEXT);
+        SchedulerService.initHttp(Constant.IP, Constant.PORT, Constant.CONTEXT);
     }
 
     /**
@@ -107,11 +90,12 @@ public class JobTest {
                     "}\n" +
                     "var pathValue = \"\" + year + month + day + hour + minutes;");
 
+            JobResultNotification email = JobUtils.getEmail("adonis", "jobResultNotification", "12345678@345.com", NotificationSendMoment.FailSend);
             /*设置作业调度策略*/
             JobConfig jobConfig = JobUtils.getJobConfig(SchedulerType.WEEKLY, 0, 0, 0, 1, 0);
             /*组合作业*/
-            job = JobUtils.getJob(Constant.JOBNAME, Constant.PROJECT_ID, Constant.USERNAME, Constant.SYSTEM_NAME,
-                    Constant.TASK_NAME, Constant.JOB_DESCRIPTION, jobParams, jobConfig, allDepFile, shell, python, ssh);
+            job = JobUtils.getJob(Constant.JOBNAME + "_" + System.currentTimeMillis(), Constant.PROJECT_ID, Constant.USERNAME, Constant.PORTAL_USER_ID, Constant.USER_TYPE, Constant.SYSTEM_NAME,
+                    Constant.TASK_NAME, Constant.JOB_DESCRIPTION, jobParams, email, jobConfig, allDepFile, shell, python, ssh);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -139,8 +123,8 @@ public class JobTest {
                 脚本中调用的文件路径引用，要跟这里设置的一致。如 "/test/001/abc.txt" 和 "test/001/abc.txt" 的引用，需要写成 "./test/001/abc.txt"
             */
             String sparkDepFilePath = sparkDepFile.getName();
-            BasePlugin<Spark> spark = JobPluginUtils.getSpark("spark_test", "org.apache.spark.examples.SparkPi","count-Pi", "local", sparkDepFilePath, "",
-                    "2g","2","1","2","2","","2.2.0","");
+            BasePlugin<Spark> spark = JobPluginUtils.getSpark("spark_test", "org.apache.spark.examples.SparkPi", "count-Pi", "local", sparkDepFilePath, "",
+                    "2g", "2", "1", "2", "2", "", "2.2.0", "");
 
             /*设置作业参数*/
             JobParams jobParams = JobUtils.getJobParams("pathValue", "var date = new Date();\n" +
@@ -162,8 +146,8 @@ public class JobTest {
             /*设置作业调度策略*/
             JobConfig jobConfig = JobUtils.getJobConfig(SchedulerType.WEEKLY, 0, 0, 0, 1, 0);
             /*组合作业*/
-            job = JobUtils.getJob(Constant.JOBNAME, Constant.PROJECT_ID, Constant.USERNAME, Constant.SYSTEM_NAME,
-                    Constant.TASK_NAME, Constant.JOB_DESCRIPTION, jobParams, jobConfig, allDepFile, spark);
+            job = JobUtils.getJob(Constant.JOBNAME, Constant.PROJECT_ID, Constant.USERNAME, Constant.PORTAL_USER_ID, Constant.USER_TYPE, Constant.SYSTEM_NAME,
+                    Constant.TASK_NAME, Constant.JOB_DESCRIPTION, jobParams, email, jobConfig, allDepFile, spark);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -189,8 +173,8 @@ public class JobTest {
 
     @Test
     public void jobDeploy() {
-//        Job job = createJob();
-        Job job = createSparkJob();
+        Job job = createJob();
+//        Job job = createSparkJob();
         GeneralResponse publistResponse = jobService.publishJob(job);
         System.out.println(job);
         System.out.println(JSONObject.toJSONString(publistResponse));
@@ -258,16 +242,6 @@ public class JobTest {
             GeneralResponse response = processService.jobCheck(Constant.JOBNAME, Constant.PROJECT_ID, "flow_1550138869530_skbtvfxh");
             System.out.println(JSONObject.toJSONString(response));
             Thread.sleep(1000 * 2);
-        }
-    }
-
-    @Test
-    public void downloadLog() throws IOException {
-        InputStream inputStream = processService.downloadLog(Constant.JOBNAME, Constant.PROJECT_ID, EXECUTION_ID);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()));
-        String s;
-        while ((s = bufferedReader.readLine()) != null) {
-            System.out.println(s);
         }
     }
 
