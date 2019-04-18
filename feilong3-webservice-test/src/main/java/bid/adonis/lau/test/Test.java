@@ -7,7 +7,6 @@ import chinatelecom.feilong.scheduler.entity.JobConfig;
 import chinatelecom.feilong.scheduler.entity.JobParams;
 import chinatelecom.feilong.scheduler.entity.plugins.BasePlugin;
 import chinatelecom.feilong.scheduler.entity.plugins.Jar;
-import chinatelecom.feilong.scheduler.entity.plugins.Shell;
 import chinatelecom.feilong.scheduler.entity.response.GeneralResponse;
 import chinatelecom.feilong.scheduler.enumeration.SchedulerType;
 import chinatelecom.feilong.scheduler.service.SchedulerService;
@@ -29,7 +28,8 @@ public class Test {
         SchedulerService.init(Constant.IP, Constant.PORT, Constant.CONTEXT);
         JobService jobService = new JobService();
         Test test = new Test();
-        Job job = test.createJob(args[0], args[1]);
+        Job job = test.createJob("", "");
+//        Job job = test.createJob(args[0], args[1]);
         GeneralResponse publistResponse = jobService.publishJob(job);
         System.out.println(job);
         System.out.println(JSONObject.toJSONString(publistResponse));

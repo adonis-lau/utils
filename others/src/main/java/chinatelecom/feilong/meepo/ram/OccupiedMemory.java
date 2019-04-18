@@ -15,10 +15,11 @@ public class OccupiedMemory {
 
         System.out.println("将占用" + num + "G的内存");
 
-        for (int i = 0;i < num; i++){
+        for (int i = 0; i < num; i++) {
             byte[] buf = new byte[G];
         }
 
-        Thread.sleep(1000 * 60 *minute);
+        Thread.sleep(1000 * 60 * minute);
+
     }
 }

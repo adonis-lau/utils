@@ -4,6 +4,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoIterable;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 
@@ -42,7 +43,9 @@ public class MongodbConnectionSource {
     protected void init() throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 
 //        System.setProperty("javax.net.ssl.trustStore", "C:\\Users\\adonis\\Desktop\\ssl2\\mongodb.pem");
+//        System.setProperty("javax.net.ssl.trustStore", "C:\\Users\\adonis\\Desktop\\ssl2\\mongodb.pem");
 //        System.setProperty("javax.net.ssl.trustStorePassword", "");
+        System.setProperty("javax.net.ssl.keyStore", "C:\\Users\\adonis\\Desktop\\ssl2\\client.pem");
 //        System.setProperty("javax.net.ssl.keyStore", "C:\\Users\\adonis\\Desktop\\ssl2\\client.pem");
 //        System.setProperty("javax.net.ssl.keyStorePassword", "");
 
@@ -58,7 +61,7 @@ public class MongodbConnectionSource {
                 .sslEnabled(sslEnable)
                 /*允许无效的主机名*/
                 .sslInvalidHostNameAllowed(true)
-                .sslContext(getSSLContext());
+                /*.sslContext(getSSLContext())*/;
         MongoClientURI uri = new MongoClientURI(URI, builder);
         mongoClient = new MongoClient(uri);
         init = true;
@@ -108,6 +111,11 @@ public class MongodbConnectionSource {
                             init();
                         }
 //                        dbCollection = mongoClient.getDatabase(db).getCollection(collection);
+                        MongoIterable<String> strings = mongoClient.getDatabase(db).listCollectionNames();
+                        for (String string : strings) {
+
+                            log.info(string);
+                        }
                         dbCollection = mongoClient.getDatabase(db).getCollection(this.collection);
                     } catch (Exception e1) {
                         log.info(e1.getMessage(), e1);

@@ -80,6 +80,12 @@ mvn install:install-file -DgroupId=chinatelecom.feilong3 -DartifactId=scheduler-
         }
         var pathValue = "" + year + month + day + hour + minutes;
       ```
+    * 设置作业运行监控通知
+      * 使用 JobUtils.getEmail() 或 JobUtils.getSms() 获取JobResultNotification对象
+      * 例如
+        ```
+          JobResultNotification email = JobUtils.getEmail("adonis", "jobResultNotification", "12345678@345.com", NotificationSendMoment.FailSend);
+        ```
     * 设置调度策略
       * 使用 JobUtils.getJobConfig() 方法可以获取调度策略对象。
       * 调度策略可以按照 `秒，分，时，周，月` 进行设置，也可以使用`crontab`表达式进行设置。
@@ -97,6 +103,12 @@ mvn install:install-file -DgroupId=chinatelecom.feilong3 -DartifactId=scheduler-
         public static Job getJob(String jobName, String projectId, String username, String systemName, String taskName, String jobDescription, JobParams jobParams, JobConfig jobConfig, List<File> dependentFiles, BasePlugin... plugins)
         方法的使用：
         Job job = JobUtils.getJob("job_publish_test_1543476609886", "40288df2631f723801632546c8f60321", "meepo_job", "meepo", "test", "测试作业", jobParams, jobConfig, dependentFiles, shell, jar, python, mr);
+        
+        方法（带邮件通知）：
+        public static Job getJob(String jobName, String projectId, String username, String systemName, String taskName, String jobDescription, JobParams jobParams, JobResultNotification jobResultNotification, JobConfig jobConfig, List<File> dependentFiles, BasePlugin... plugins)
+        方法的使用：
+        Job job = JobUtils.getJob("job_publish_test_1543476609886", "40288df2631f723801632546c8f60321", "meepo_job", "meepo", "test", "测试作业", jobParams, email, jobConfig, dependentFiles, shell, jar, python, mr);
+
       ```
       这样我们便创建了一个作业名为 job_publish_test_1543476609886 、归属于项目 40288df2631f723801632546c8f60321 和 用户 meepo_job 的作业。该作业包含了作业运行参数 jobParams 、调度策略为 jobConfig 、依赖文件为 dependentFiles 。包含了 shell、 jar、 python和mr等四个组件。
   * ####调用作业发布方法
