@@ -19,9 +19,9 @@ public class msg_yueme {
 
     public static void main(String[] args) {
 
-        String to = "17637275713";
+        String to = "17600000000";
         String context = "短信测试";
-        String url = "http://route.189cube.com/sms/SmsSend";
+        String url = "http://sms/sms/SmsSend";
 
         String sms = "{'bizEvent':'11','mobilePhone': '${phone}','param': {'from':'${jobName}','platform':'��me','level':'ETL','event_id':'����','description':'meepo��������������${msg}','time':'${time}'}}";
         sms = sms.replaceAll("\\$\\{phone\\}", to);
