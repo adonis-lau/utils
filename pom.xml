@@ -31,11 +31,11 @@
         <google.guava.version>27.0.1-jre</google.guava.version>
         <cdh.hadoop.version>2.6.0-cdh5.13.0</cdh.hadoop.version>
 
-        <lombok.version>1.18.2</lombok.version>
+        <lombok.version>1.18.28</lombok.version>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <junit.version>4.12</junit.version>
-        <fastjson.version>1.2.51</fastjson.version>
+        <fastjson.version>2.0.33</fastjson.version>
         <quartz.version>2.3.0</quartz.version>
         <mongo.version>3.6.4</mongo.version>
 
@@ -61,6 +61,7 @@
 <!--        <module>feilong3-webservice-test</module>-->
         <module>mongodb-learn</module>
         <module>poi-utils</module>
+        <module>chrome-password-merge</module>
     </modules>
 
 
