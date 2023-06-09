@@ -22,7 +22,7 @@ public class Email {
             "\t<div style=\"position: static !important; margin: 10px; font-family: verdana; font-size: 10pt;\">\n" +
             "\t\t<div style=\"font-family: Arial; font-size: 14px; line-height: 23px;\">\n" +
             "\t\t\t<div>\n" +
-            "\t\t\t\t<b>刘德帅</b></div>\n" +
+            "\t\t\t\t<b>USERNAME</b></div>\n" +
             "\t\t\t<div>\n" +
             "\t\t\t\t<b>大数据业务部</b></div>\n" +
             "\t\t</div>\n" +
@@ -43,8 +43,8 @@ public class Email {
 
     public static void main(String[] args) {
         String nick = "admin";
-        String from = "adonis@liudeshuai.cn";
-        String password = "Liu546085758";
+        String from = "adonis@email.com";
+        String password = "password";
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.exmail.qq.com");
         props.put("mail.smtp.port", 25);
