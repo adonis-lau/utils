@@ -1,12 +1,12 @@
 package bid.adonis.lau.utils;
 
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson2.JSONWriter;
 
 /**
  * @author: Adonis Lau
  * @date: 2018/10/25 10:38
  */
-public class JSONObject extends com.alibaba.fastjson.JSONObject {
+public class JSONObject extends com.alibaba.fastjson2.JSONObject {
 
     /**
      * 重写 toJSONString 方法
@@ -23,12 +23,12 @@ public class JSONObject extends com.alibaba.fastjson.JSONObject {
      * @return
      */
     public static String toJSONString(Object object) {
-        String jsonString = com.alibaba.fastjson.JSONObject.toJSONString(object,
-                SerializerFeature.WriteMapNullValue,
-                SerializerFeature.WriteNullNumberAsZero,
-                SerializerFeature.WriteNullListAsEmpty,
-                SerializerFeature.WriteNullStringAsEmpty,
-                SerializerFeature.WriteNullBooleanAsFalse);
+        String jsonString = com.alibaba.fastjson2.JSONObject.toJSONString(object,
+                JSONWriter.Feature.WriteMapNullValue,
+                JSONWriter.Feature.WriteNullNumberAsZero,
+                JSONWriter.Feature.WriteNullListAsEmpty,
+                JSONWriter.Feature.WriteNullStringAsEmpty,
+                JSONWriter.Feature.WriteNullBooleanAsFalse);
         return jsonString.replace("clazz", "class");
     }
 
